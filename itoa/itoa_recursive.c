@@ -21,6 +21,8 @@ void ft_itoa_build(long int nbr, int *steps, char **rst)
 	if (nbr < 10)
 	{
 		*rst = (char *)malloc(sizeof(char) * (steps[0] + 2));
+		if (*rst == NULL)
+			return ;
 		(*rst)[steps[0] + 1] = '\0';
 		if (steps[1] == 1)
 			(*rst)[0] = '-';
@@ -30,6 +32,8 @@ void ft_itoa_build(long int nbr, int *steps, char **rst)
 	}
 	steps[0]++;
 	ft_itoa_build(nbr / 10, steps, rst);
+	if (*rst == NULL)
+		return ;
 	(*rst)[steps[1]] = (nbr % 10) + '0';
 	steps[1]++;
 }
@@ -63,5 +67,11 @@ int main()
 	toItoa = ft_itoa(INT_MAX);
 	printf("%d <- max [ %s ] <- str\n", INT_MAX, toItoa);
 	free(toItoa);
+	toItoa = ft_itoa(25889);
+	printf("%d <- int [ %s ] <- str\n", 25889, toItoa);
+	toItoa = ft_itoa(-1);
+	printf("%d <- int [ %s ] <- str\n", -1, toItoa);
+	toItoa = ft_itoa(0);
+	printf("%d <- int [ %s ] <- str\n", 0, toItoa);
 	return (0);
 }
